@@ -43,4 +43,5 @@ class RNModel(GenericMLModel):
         new_obj = RNModel()
         new_obj.learning_rate = self.learning_rate
         new_obj.rn_model = keras.models.clone_model(self.rn_model)
+        new_obj.rn_model.set_weights(self.rn_model.get_weights())
         return new_obj
