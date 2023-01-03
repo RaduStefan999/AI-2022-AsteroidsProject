@@ -10,7 +10,7 @@ class RNModel(GenericMLModel):
     def __init__(self, rn_model: Model = None):
         super().__init__()
         self.rn_model = rn_model
-        self.learning_rate = 0.01
+        self.learning_rate = 0.0001
 
     def init_for_training(self, input_shape: int) -> None:
         input_layer = Input(shape=input_shape)
