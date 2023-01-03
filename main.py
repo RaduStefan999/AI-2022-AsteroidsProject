@@ -22,5 +22,5 @@ def benchmark_models(models_data: list) -> None:
 
 if __name__ == '__main__':
     #benchmark_models([(RNModel(), 200)])
-    benchmark_models([(ADABoostModel(), 10)])
+    benchmark_models([(ADABoostModel(), 30)])
 

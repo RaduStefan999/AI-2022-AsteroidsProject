@@ -1,3 +1,4 @@
+import keras.models
 import numpy as np
 from Models.generic_ml_model import GenericMLModel
 from keras import backend
@@ -37,3 +38,9 @@ class RNModel(GenericMLModel):
 
     def load(self, path_to_model: str) -> None:
         raise NotImplementedError()
+
+    def copy(self) -> any:
+        new_obj = RNModel()
+        new_obj.learning_rate = self.learning_rate
+        new_obj.rn_model = keras.models.clone_model(self.rn_model)
+        return new_obj

@@ -24,3 +24,6 @@ class GenericMLModel(GenericModel):
     def load(self, path_to_model: str) -> None:
         raise NotImplementedError()
 
+    def copy(self) -> any:
+        raise NotImplementedError()
+

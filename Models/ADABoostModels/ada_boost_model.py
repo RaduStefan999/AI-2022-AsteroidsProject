@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 from sklearn.ensemble import AdaBoostRegressor
 from Models.generic_ml_model import GenericMLModel
@@ -25,3 +26,6 @@ class ADABoostModel(GenericMLModel):
 
     def load(self, path_to_model: str) -> None:
         raise NotImplementedError()
+
+    def copy(self) -> any:
+        return copy.deepcopy(self)
