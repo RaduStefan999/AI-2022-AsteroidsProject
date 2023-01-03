@@ -1,26 +1,27 @@
 import numpy as np
-from generic_model import GenericModel
+from sklearn.ensemble import AdaBoostRegressor
+from Models.generic_ml_model import GenericMLModel
 
 
-class GenericMLModel(GenericModel):
-    def __init__(self):
+class ADABoostModel(GenericMLModel):
+    def __init__(self, regressor: AdaBoostRegressor = None):
         super().__init__()
+        self.regressor = regressor
 
     def init_for_training(self, input_shape: int) -> None:
-        raise NotImplementedError()
+        self.regressor = AdaBoostRegressor(n_estimators=100, random_state=0)
 
     def predict(self, features: np.array) -> float:
-        raise NotImplementedError()
+        return self.regressor.predict(features)[0]
 
     def predict_on_array(self, features: np.array) -> np.array:
-        raise NotImplementedError()
+        return self.regressor.predict(features).reshape(-1)
 
     def train(self, data: tuple[np.array, np.array]) -> None:
-        raise NotImplementedError()
+        self.regressor.fit(data[0], data[1])
 
     def save(self, path_to_model: str) -> None:
         raise NotImplementedError()
 
     def load(self, path_to_model: str) -> None:
         raise NotImplementedError()
-

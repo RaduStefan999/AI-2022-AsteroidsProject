@@ -15,8 +15,8 @@ class RNModel(GenericMLModel):
     def init_for_training(self, input_shape: int) -> None:
         input_layer = Input(shape=input_shape)
 
-        dense_layer_1 = Dense(256, activation="relu")(input_layer)
-        dense_layer_2 = Dense(128, activation="relu")(dense_layer_1)
+        dense_layer_1 = Dense(256, kernel_initializer='lecun_normal', activation="selu")(input_layer)
+        dense_layer_2 = Dense(128, kernel_initializer='lecun_normal', activation="selu")(dense_layer_1)
 
         output_layer = Dense(1, activation="linear")(dense_layer_2)
 
@@ -25,6 +25,9 @@ class RNModel(GenericMLModel):
 
     def predict(self, features: np.array) -> float:
         return self.rn_model.predict(features)[0]
+
+    def predict_on_array(self, features: np.array) -> np.array:
+        return self.rn_model.predict(features).reshape(-1)
 
     def train(self, data: tuple[np.array, np.array]) -> None:
         self.rn_model.fit(data[0], data[1])
