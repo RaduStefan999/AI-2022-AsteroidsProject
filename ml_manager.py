@@ -38,6 +38,12 @@ class MLManager:
 
     @staticmethod
     def benchmark_model(model: GenericMLModel, data_container: DataContainer) -> None:
+        print(f"Last validation set mean_squared_error: "
+              f"{BenchmarkWorker.mean_squared_error(model, data_container.get_validation_set())}")
+
+        print(f"Last validation set r2_score: "
+              f"{BenchmarkWorker.r2_score_value(model, data_container.get_validation_set())}")
+
         print(f"Test set mean_squared_error: "
               f"{BenchmarkWorker.mean_squared_error(model, data_container.get_test_set())}")
 
