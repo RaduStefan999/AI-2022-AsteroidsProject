@@ -28,8 +28,8 @@ class MLManager:
 
             print("\n".join([f"Iteration {it} {key}: {current_specs[key]}" for key in current_specs.keys()]))
 
-            if current_specs["r2_score"] < mean_squared_error_best:
-                mean_squared_error_best = current_specs["r2_score"]
+            if current_specs["mean_squared_error"] < mean_squared_error_best:
+                mean_squared_error_best = current_specs["mean_squared_error"]
                 best_model = model.copy()
 
         return best_model, all_training_specs

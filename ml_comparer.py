@@ -1,7 +1,53 @@
+import os
 from ml_manager import MLManager
 from Models.generic_ml_model import GenericMLModel
 from Utils.data_container import DataContainer
 from Utils.data_loader import DataLoader
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+class TrainingPlotMaker:
+    def __init__(self, trained_model_name: str):
+        self.trained_model_name = trained_model_name
+
+    def initialize(self) -> None:
+        if not os.path.isdir(f"MLComparer/{self.trained_model_name}"):
+            os.mkdir(f"MLComparer/{self.trained_model_name}")
+
+    def make_plot(self, trained_model_specs: dict[str, list]) -> None:
+        self.initialize()
+        for specs_name, model_specs in trained_model_specs.items():
+            model_specs_frame = {"iteration": list(range(len(model_specs))), f"{specs_name}": model_specs}
+            current_bar_plot = sns.barplot(x="iteration", y=f"{specs_name}", data=model_specs_frame)
+            current_bar_plot.set(ylabel=f"{specs_name}")
+
+            plt.savefig(f"MLComparer/{self.trained_model_name}/{specs_name}.png")
+            plt.clf()
+
+
+class BenchmarkPlotMaker:
+    def __init__(self):
+        pass
+
+    def make_plot(self, trained_model_specs: dict[str, dict[str, float]]) -> None:
+        algorithm_specs_comparison = dict()
+
+        for model_name, specs_dict in trained_model_specs.items():
+            for spec_name, spec_value in specs_dict.items():
+                algorithm_spec_item = algorithm_specs_comparison.get(spec_name, {"model_name": [], "spec_value": []})
+                algorithm_spec_item["model_name"] += [model_name]
+                algorithm_spec_item["spec_value"] += [spec_value]
+
+                algorithm_specs_comparison[spec_name] = algorithm_spec_item
+
+        for spec_name, model_values_obj in algorithm_specs_comparison.items():
+            current_bar_plot = sns.barplot(x="model_name", y=f"spec_value", data=model_values_obj)
+            current_bar_plot.set(ylabel=f"{spec_name}")
+
+            plt.savefig(f"MLComparer/models_comparison_on_{spec_name}.png")
+            plt.clf()
 
 
 class MLComparer:
@@ -26,4 +72,9 @@ class MLComparer:
         self.all_models_benchmark_specs[model_name] = benchmark_specs
 
     def dump_comparison(self) -> None:
-        pass
+        for trained_model_name, trained_model_specs in self.all_models_training_specs.items():
+            training_plot_maker_obj = TrainingPlotMaker(trained_model_name)
+            training_plot_maker_obj.make_plot(trained_model_specs)
+
+        benchmark_plot_maker_obj = BenchmarkPlotMaker()
+        benchmark_plot_maker_obj.make_plot(self.all_models_benchmark_specs)
