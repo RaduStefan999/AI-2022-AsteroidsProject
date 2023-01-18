@@ -4,11 +4,11 @@ from sklearn.neighbors import KNeighborsRegressor
 from Models.generic_ml_model import GenericMLModel
 
 class KNNModel(GenericMLModel):
-    def __init__(self, regressor: KNeighborsRegressor = None):
+    def __init__(self, regressor: KNeighborsRegressor = None, weights='uniform'):
         super().__init__()
         self.regressor = regressor
         self.neighbours = 5
-        self.weights = 'distance'
+        self.weights = weights
 
     def init_for_training(self, input_shape: int) -> None:
         self.regressor = KNeighborsRegressor(n_neighbors=self.neighbours, weights=self.weights)
