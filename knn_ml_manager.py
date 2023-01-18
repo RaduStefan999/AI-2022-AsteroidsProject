@@ -1,11 +1,9 @@
-import numpy as np
-
 from ml_manager import MLManager
-from Utils.benchmark_worker import BenchmarkWorker
 from Models.generic_ml_model import GenericMLModel
 from Utils.data_container import DataContainer
 
-class KNNManager(MLManager):
+
+class KNNManager:
     def __init__(self):
         pass
 
@@ -36,34 +34,3 @@ class KNNManager(MLManager):
                 best_model = current_model.copy()
 
         return best_model, all_training_specs
-
-    @staticmethod
-    def train_model(model: GenericMLModel, data_container: DataContainer, nr_of_epochs: int) -> GenericMLModel:
-        return MLManager.train_model_get_specs(model, data_container, nr_of_epochs)[0]
-
-    @staticmethod
-    def benchmark_model(model: GenericMLModel, data_container: DataContainer) -> dict[str, float]:
-        validation_specs = MLManager.get_specs(model, data_container.get_validation_set())
-        print("\n".join([f"Last validation set {key}: {validation_specs[key]}" for key in validation_specs.keys()]))
-
-        test_specs = MLManager.get_specs(model, data_container.get_test_set())
-        print("\n".join([f"Test set {key}: {test_specs[key]}" for key in test_specs.keys()]))
-
-        return validation_specs
-
-    @staticmethod
-    def concat_specs(all_training_specs: dict, current_specs: dict[str, float]) -> dict[str, list]:
-        return {key: all_training_specs.get(key, []) + [current_specs[key]] for key in current_specs.keys()}
-
-    @staticmethod
-    def get_specs(model: GenericMLModel, data_set: tuple) -> dict[str, float]:
-        features, target = data_set
-        prediction = model.predict_on_array(features)
-
-        return {
-            "mean_absolute_error": BenchmarkWorker.mean_absolute_error(data_set, prediction),
-            "mean_squared_error": BenchmarkWorker.mean_squared_error(data_set, prediction),
-            "median_absolute_error": BenchmarkWorker.median_absolute_error(data_set, prediction),
-            "explained_variance_score": BenchmarkWorker.explained_variance_score_value(data_set, prediction),
-            "r2_score": BenchmarkWorker.r2_score_value(data_set, prediction)
-        }

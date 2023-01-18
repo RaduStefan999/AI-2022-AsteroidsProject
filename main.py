@@ -24,9 +24,8 @@ if __name__ == '__main__':
     # ml_comparer_obj.compare_benchmark("RandomForest_Model", trained_random_forest_model)
 
     # Compare training of KNN models with different k values
-    trained_knn_model, training_specs = KNNManager.train_model_get_specs(KNNModel(), ml_comparer_obj.data_container, 15)
 
-    ml_comparer_obj.all_models_training_specs["KNN_Model"] = training_specs
+    trained_knn_model = ml_comparer_obj.compare_training("KNN_Model", KNNModel(),  15, KNNManager.train_model_get_specs)
 
     ml_comparer_obj.compare_benchmark("KNN_Model", trained_knn_model)
 
