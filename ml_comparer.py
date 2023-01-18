@@ -3,6 +3,7 @@ from ml_manager import MLManager
 from Models.generic_ml_model import GenericMLModel
 from Utils.data_container import DataContainer
 from Utils.data_loader import DataLoader
+from collections.abc import Callable
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -60,8 +61,16 @@ class MLComparer:
     def initialize(self) -> None:
         self.data_container.load(DataLoader("./Data/Engineered/Asteroid_Updated_Engineered_Scaled.bin"))
 
-    def compare_training(self, model_name: str, model: GenericMLModel, number_of_epochs: int) -> GenericMLModel:
-        trained_model, training_specs = MLManager.train_model_get_specs(model, self.data_container, number_of_epochs)
+    def compare_training(self, model_name: str, model: GenericMLModel, number_of_epochs: int,
+                         override_train_model_get_specs: Callable = None) -> GenericMLModel:
+
+        if override_train_model_get_specs is not None:
+            trained_model, training_specs = override_train_model_get_specs(model, self.data_container,
+                                                                           number_of_epochs)
+
+        else:
+            trained_model, training_specs = MLManager.train_model_get_specs(model, self.data_container,
+                                                                            number_of_epochs)
 
         self.all_models_training_specs[model_name] = training_specs
         return trained_model
