@@ -43,7 +43,7 @@ class CNNRNModel(GenericMLModel):
         raise NotImplementedError()
 
     def copy(self) -> any:
-        new_obj = RNModel()
+        new_obj = CNNRNModel()
         new_obj.learning_rate = self.learning_rate
         new_obj.rn_model = keras.models.clone_model(self.rn_model)
         new_obj.rn_model.set_weights(self.rn_model.get_weights())
