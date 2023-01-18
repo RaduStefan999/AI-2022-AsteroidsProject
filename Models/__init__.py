@@ -7,3 +7,4 @@ import generic_ml_model
 import generic_model
 import RNModels.rn_model
 import SVMModel.svm_model
+import RandomForestModels.random_forest_model
