@@ -23,12 +23,18 @@ if __name__ == '__main__':
     # trained_random_forest_model = ml_comparer_obj.compare_training("RandomForest_Model", RandomForestModel(), 10)
     # ml_comparer_obj.compare_benchmark("RandomForest_Model", trained_random_forest_model)
 
-    # Compare training of KNN models with different k values
-    trained_knn_model, training_specs = KNNManager.train_model_get_specs(KNNModel(), ml_comparer_obj.data_container, 15)
+    # Compare training of KNN models with different k values, and either 'uniform' or 'distance' weights
+    trained_uniform_knn_model, training_specs = KNNManager.train_model_get_specs(KNNModel(weights='uniform'),
+                                                                                 ml_comparer_obj.data_container, 15)
+    ml_comparer_obj.all_models_training_specs["KNN_uniform_Model"] = training_specs
+    ml_comparer_obj.compare_benchmark("KNN_uniform_Model", trained_uniform_knn_model)
 
-    ml_comparer_obj.all_models_training_specs["KNN_Model"] = training_specs
+    trained_distance_knn_model, training_specs = KNNManager.train_model_get_specs(KNNModel(weights='distance'),
+                                                                                  ml_comparer_obj.data_container, 15)
+    ml_comparer_obj.all_models_training_specs["KNN_distance_Model"] = training_specs
+    ml_comparer_obj.compare_benchmark("KNN_distance_Model", trained_distance_knn_model)
 
-    ml_comparer_obj.compare_benchmark("KNN_Model", trained_knn_model)
+
 
     ml_comparer_obj.dump_comparison()
 
