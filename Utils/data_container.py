@@ -20,8 +20,8 @@ class DataContainer:
         validation_set_upper_edge = int(0.9 * feature_set.shape[0])
 
         self.training_set = shuffled_feature_set[:training_set_upper_edge, :], shuffled_target_set[:training_set_upper_edge]
-        self.test_set= shuffled_feature_set[training_set_upper_edge:validation_set_upper_edge, :], shuffled_target_set[training_set_upper_edge:validation_set_upper_edge]
-        self.validation_set  = shuffled_feature_set[validation_set_upper_edge:, :], shuffled_target_set[validation_set_upper_edge:]
+        self.validation_set = shuffled_feature_set[training_set_upper_edge:validation_set_upper_edge, :], shuffled_target_set[training_set_upper_edge:validation_set_upper_edge]
+        self.test_set = shuffled_feature_set[validation_set_upper_edge:, :], shuffled_target_set[validation_set_upper_edge:]
 
     def get_training_set(self) -> tuple:
         return self.training_set
