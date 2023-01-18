@@ -16,7 +16,7 @@ class KNNManager:
 
         all_training_specs = dict()
 
-        for k in range(1, max_k):
+        for k in range(1, max_k, 2):
             current_model = model.copy()
             current_model.neighbours = k
             current_model.init_for_training(data_container.get_input_shape())

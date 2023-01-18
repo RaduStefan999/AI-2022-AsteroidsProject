@@ -25,9 +25,15 @@ if __name__ == '__main__':
 
     # Compare training of KNN models with different k values
 
-    trained_knn_model = ml_comparer_obj.compare_training("KNN_Model", KNNModel(),  15, KNNManager.train_model_get_specs)
+    trained_knn_uniform_model = ml_comparer_obj.compare_training("KNN_Uniform_Model", KNNModel(weights="uniform"),  15,
+                                                                 KNNManager.train_model_get_specs)
 
-    ml_comparer_obj.compare_benchmark("KNN_Model", trained_knn_model)
+    ml_comparer_obj.compare_benchmark("KNN_Uniform_Model", trained_knn_uniform_model)
+
+    trained_knn_distance_model = ml_comparer_obj.compare_training("KNN_Distance_Model", KNNModel(weights="distance"),  15,
+                                                                  KNNManager.train_model_get_specs)
+
+    ml_comparer_obj.compare_benchmark("KNN_Distance_Model", trained_knn_distance_model)
 
     ml_comparer_obj.dump_comparison()
 
