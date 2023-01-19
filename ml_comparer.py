@@ -4,6 +4,7 @@ from Models.generic_ml_model import GenericMLModel
 from Utils.data_container import DataContainer
 from Utils.data_loader import DataLoader
 from collections.abc import Callable
+import pandas as pd
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -44,9 +45,19 @@ class BenchmarkPlotMaker:
                 algorithm_specs_comparison[spec_name] = algorithm_spec_item
 
         for spec_name, model_values_obj in algorithm_specs_comparison.items():
-            current_bar_plot = sns.barplot(x="model_name", y=f"spec_value", data=model_values_obj)
+            model_values_obj_pd_dataframe = pd.DataFrame.from_dict(model_values_obj)
+
+            sorted_model_values_obj_pd_dataframe = model_values_obj_pd_dataframe.sort_values(by="spec_value", ascending=False)
+
+            plt.subplots(figsize=(16, 8))
+            fig, ax = plt.subplots()
+            fig.subplots_adjust(bottom=0.4)
+
+            current_bar_plot = sns.barplot(x="model_name", y=f"spec_value", data=sorted_model_values_obj_pd_dataframe)
+
             current_bar_plot.set(ylabel=f"{spec_name}")
 
+            plt.xticks(rotation=60)
             plt.savefig(f"MLComparer/models_comparison_on_{spec_name}.png")
             plt.clf()
 
