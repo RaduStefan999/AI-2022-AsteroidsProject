@@ -1,3 +1,4 @@
+import joblib
 import copy
 import numpy as np
 from sklearn.ensemble import AdaBoostRegressor
@@ -22,10 +23,10 @@ class ADABoostModel(GenericMLModel):
         self.regressor.fit(data[0], data[1])
 
     def save(self, path_to_model: str) -> None:
-        raise NotImplementedError()
+        joblib.dump(self.regressor, path_to_model)
 
     def load(self, path_to_model: str) -> None:
-        raise NotImplementedError()
+        self.regressor = joblib.load(path_to_model)
 
     def copy(self) -> any:
         return copy.deepcopy(self)

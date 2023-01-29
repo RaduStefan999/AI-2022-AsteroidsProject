@@ -1,3 +1,4 @@
+import joblib
 import copy
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
@@ -10,7 +11,7 @@ class RandomForestModel(GenericMLModel):
         self.regressor = regressor
 
     def init_for_training(self, input_shape: int) -> None:
-        self.regressor = RandomForestRegressor(n_estimators=10, random_state=0)
+        self.regressor = RandomForestRegressor(n_estimators=25, random_state=0)
 
     def predict(self, features: np.array) -> float:
         return self.regressor.predict(features)[0]
@@ -22,10 +23,10 @@ class RandomForestModel(GenericMLModel):
         self.regressor.fit(data[0], data[1])
 
     def save(self, path_to_model: str) -> None:
-        raise NotImplementedError()
+        joblib.dump(self.regressor, path_to_model)
 
     def load(self, path_to_model: str) -> None:
-        raise NotImplementedError()
+        self.regressor = joblib.load(path_to_model)
 
     def copy(self) -> any:
         return copy.deepcopy(self)

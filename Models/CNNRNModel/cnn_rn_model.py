@@ -37,10 +37,10 @@ class CNNRNModel(GenericMLModel):
         self.rn_model.fit(data[0], data[1])
 
     def save(self, path_to_model: str) -> None:
-        raise NotImplementedError()
+        self.rn_model.save(path_to_model)
 
     def load(self, path_to_model: str) -> None:
-        raise NotImplementedError()
+        self.rn_model = keras.models.load_model(path_to_model)
 
     def copy(self) -> any:
         new_obj = CNNRNModel()
