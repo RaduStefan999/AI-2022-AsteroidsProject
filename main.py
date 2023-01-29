@@ -59,6 +59,24 @@ def load_and_benchmark() -> None:
     loaded_rn_model = MLStoreModel.load("RN_Model", RNModel())
     ml_comparer_obj.compare_benchmark("RN_Model", loaded_rn_model)
 
+    trained_cnn_rn_model = MLStoreModel.load("CNN_RN_Model", CNNRNModel())
+    ml_comparer_obj.compare_benchmark("CNN_RN_Model", trained_cnn_rn_model)
+
+    trained_adaboost_model = MLStoreModel.load("ADABoost_Model", ADABoostModel())
+    ml_comparer_obj.compare_benchmark("ADABoost_Model", trained_adaboost_model)
+
+    trained_svm_model = MLStoreModel.load("SVM_Model", SVMModel())
+    ml_comparer_obj.compare_benchmark("SVM_Model", trained_svm_model)
+
+    trained_random_forest_model = MLStoreModel.load("RandomForest_Model", RandomForestModel())
+    ml_comparer_obj.compare_benchmark("RandomForest_Model", trained_random_forest_model)
+
+    trained_knn_uniform_model = MLStoreModel.load("KNN_Uniform_Model", KNNModel(weights="uniform"))
+    ml_comparer_obj.compare_benchmark("KNN_Uniform_Model", trained_knn_uniform_model)
+
+    trained_knn_distance_model = MLStoreModel.load("KNN_Distance_Model", KNNModel(weights="distance"))
+    ml_comparer_obj.compare_benchmark("KNN_Distance_Model", trained_knn_distance_model)
+
 
 if __name__ == '__main__':
 

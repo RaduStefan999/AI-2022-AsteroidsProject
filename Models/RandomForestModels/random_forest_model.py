@@ -1,3 +1,4 @@
+import os
 import joblib
 import copy
 import numpy as np
@@ -23,10 +24,10 @@ class RandomForestModel(GenericMLModel):
         self.regressor.fit(data[0], data[1])
 
     def save(self, path_to_model: str) -> None:
-        joblib.dump(self.regressor, path_to_model)
+        joblib.dump(self.regressor, os.path.join(path_to_model, "model.bin"))
 
     def load(self, path_to_model: str) -> None:
-        self.regressor = joblib.load(path_to_model)
+        self.regressor = joblib.load(os.path.join(path_to_model, "model.bin"))
 
     def copy(self) -> any:
         return copy.deepcopy(self)
