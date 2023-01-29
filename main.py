@@ -77,6 +77,8 @@ def load_and_benchmark() -> None:
     trained_knn_distance_model = MLStoreModel.load("KNN_Distance_Model", KNNModel(weights="distance"))
     ml_comparer_obj.compare_benchmark("KNN_Distance_Model", trained_knn_distance_model)
 
+    ml_comparer_obj.dump_comparison()
+
 
 if __name__ == '__main__':
 
