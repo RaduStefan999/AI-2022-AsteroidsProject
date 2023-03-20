@@ -12,6 +12,6 @@ We have managed to study and classify 7 distinct ML models, which were trained o
 6. K-NN (distance)
 7. Random Forest
 
-After analysing the results based on different metrics, it was clear that the Random Forest model had the best immediate results. However, we are firmly convinced that with careful hyperparameter tweaking, we can achieve better results using a Neural Network model.
+After analyzing the results based on different metrics, it was clear that the Random Forest model had the best immediate results. However, we are firmly convinced that with careful hyperparameter tuning, we can achieve better results using a Neural Network model.
 
 For a digest of our results, refer to our Learn & Earn [presentation](https://github.com/RaduStefan999/AI-2022-AsteroidsProject/blob/main/presentation_ro.pdf) (available only in romanian as of the time of this commit).
